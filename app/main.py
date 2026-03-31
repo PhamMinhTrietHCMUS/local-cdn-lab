@@ -1,8 +1,9 @@
-import os, psycopg2
+import os, socket, psycopg2
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
 app = FastAPI(title="Media API")
+HOSTNAME = socket.gethostname()  # container ID — dùng để phân biệt replica
 
 def get_db():
     return psycopg2.connect(
@@ -23,11 +24,11 @@ def init_db():
 
 @app.get("/")
 def health():
-    return {"status": "healthy", "service": "media-api"}
+    return {"status": "healthy", "service": "media-api", "hostname": HOSTNAME}
 
 @app.get("/image")
 def serve_image():
     conn = get_db(); cur = conn.cursor()
     cur.execute("SELECT id, url FROM images ORDER BY RANDOM() LIMIT 1")
     row = cur.fetchone(); cur.close(); conn.close()
-    return {"id": row[0], "url": row[1]} if row else JSONResponse({"error": "no images"}, 404)
+    return {"id": row[0], "url": row[1], "hostname": HOSTNAME} if row else JSONResponse({"error": "no images"}, 404)
