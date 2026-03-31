@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  # -------- PostgreSQL --------
+  db:
+    image: postgres:16-alpine
+    container_name: cdn-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mediadb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d mediadb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  # -------- FastAPI Media App --------
+  media-api:
+    build: .
+    container_name: cdn-media-api
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: mediadb
+      DB_USER: admin
+      DB_PASS: secret
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pg_data:
