@@ -1,9 +1,13 @@
 import os, socket, psycopg2
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(title="Media API")
 HOSTNAME = socket.gethostname()  # container ID — dùng để phân biệt replica
+
+# ── Prometheus metrics: tự động đo request count, latency, in-progress ──
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 def get_db():
     return psycopg2.connect(
