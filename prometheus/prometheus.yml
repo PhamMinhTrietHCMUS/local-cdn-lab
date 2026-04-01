@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 5s          # thu thập metrics mỗi 5 giây
+  evaluation_interval: 5s
+
+scrape_configs:
+  # ── FastAPI App (tất cả replicas) ──
+  # Docker DNS trả về IP của cả 3 replica khi resolve "media-api"
+  - job_name: "media-api"
+    dns_sd_configs:
+      - names: ["media-api"]
+        type: A
+        port: 8000
+
+  # ── Nginx metrics (qua exporter) ──
+  - job_name: "nginx-exporter"
+    static_configs:
+      - targets: ["nginx-exporter:9113"]
