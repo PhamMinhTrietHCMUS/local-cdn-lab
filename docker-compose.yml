@@ -81,7 +81,7 @@ services:
     container_name: cdn-grafana
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3030:3000"
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"          # homelab — không cần login
       GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"         # full quyền cho anonymous user
