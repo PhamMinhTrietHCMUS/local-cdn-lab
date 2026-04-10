@@ -228,7 +228,37 @@ Capture timing:
 
 ![Docker Stats](docs/images/phase4-docker-stats.png)
 
-## 8. Limitations and Improvements
+## 8. Production Gap and Future Work
+
+This project is production-inspired, but still a single-host homelab setup. Below are the main gaps and next steps to make it production-ready.
+
+### 8.1 Current Production Gaps
+
+- Single-node deployment: all services are running on one host.
+- No TLS termination yet (HTTP only).
+- Secrets are still stored in compose environment variables.
+- CI/CD is basic and does not include deployment automation.
+
+### 8.2 Future Work
+
+- Multi-node orchestration (Docker Swarm or Kubernetes) for real HA.
+- TLS with automated certificate management (for example, Let's Encrypt).
+- Secrets manager integration (for example, Docker secrets, Vault, or cloud secret stores).
+- CI/CD expansion: test, security scan, image publish, and controlled deployment.
+
+## 9. CI Pipeline (Minimal)
+
+This repository includes a minimal GitHub Actions workflow that runs on push and pull request:
+
+- Lint check (Python code quality gate).
+- Docker image build validation.
+- Docker Compose configuration validation.
+
+Workflow path:
+
+- `.github/workflows/ci.yml`
+
+## 10. Additional Notes
 
 - Load generator is not isolated from the system under test.
 - No strict A/B benchmark yet for cache on vs cache off under identical hardware constraints.
@@ -240,7 +270,7 @@ Planned next steps:
 - Execute formal cache on/off A/B tests.
 - Add Prometheus alert rules for latency, error rate, and container restarts.
 
-## 9. Repository Structure
+## 11. Repository Structure
 
 ```text
 .
