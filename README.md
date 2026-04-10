@@ -127,19 +127,19 @@ locust -f locustfile.py --host http://localhost:9080 --users 1000 --spawn-rate 5
 |---|---|
 | Concurrent users | 1000 |
 | Run time | 10 minutes |
-| Total requests | 923790 |
+| Total requests | 980038 |
 | Fail rate | 0.00% |
-| Total throughput (aggregated req/s) | 1539.48 req/s |
-| Average latency (aggregated) | 228 ms |
-| P95 (aggregated) | 460 ms |
-| P99 (aggregated) | 810 ms |
-| Max latency (aggregated) | 1629 ms |
+| Total throughput (aggregated req/s) | 1632.41 req/s |
+| Average latency (aggregated) | 200 ms |
+| P95 (aggregated) | 440 ms |
+| P99 (aggregated) | 490 ms |
+| Max latency (aggregated) | 690 ms |
 
 ### 6.3 Notes
 
 - The system sustained 1000 concurrent users for 10 minutes without crashing.
 - No failed requests were observed in this run (0%).
-- Locust reported CPU > 90% on the load generator, so throughput may be partially limited by the test client machine.
+- Locust reported CPU > 90% on the load generator, so throughput and latency measurements may be partially constrained by the load client machine.
 
 ## 7. Screenshots and Reproducible Commands
 
