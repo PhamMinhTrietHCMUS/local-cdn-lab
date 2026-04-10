@@ -28,6 +28,8 @@ services:
       DB_NAME: mediadb
       DB_USER: admin
       DB_PASS: secret
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     expose:
       - "8000"
     deploy:
@@ -35,6 +37,21 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # -------- Redis Cache --------
+  redis:
+    image: redis:7-alpine
+    container_name: cdn-redis
+    restart: unless-stopped
+    expose:
+      - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   # -------- Nginx Load Balancer --------
   nginx:
