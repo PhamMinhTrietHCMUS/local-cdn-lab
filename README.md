@@ -115,6 +115,15 @@ flowchart LR
 
 ## 6. Benchmark Results (Phase 4)
 
+### 6.0 Test environment
+
+- Host machine: Acer Gaming Aspire 5 A515-58GM-51LB (NX.KQ4SV.002)
+- CPU: Intel Core i5-13420H
+- RAM: 16 GB
+- Storage: 512 GB SSD
+- GPU: NVIDIA GeForce RTX 2050 (4 GB)
+- Test topology: load generator and system under test running on the same host
+
 ### 6.1 Test command
 
 ```bash
